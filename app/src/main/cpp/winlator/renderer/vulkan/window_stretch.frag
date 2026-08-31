@@ -10,6 +10,10 @@ layout(push_constant) uniform PC {
     int   useTexAlpha;
     float strength;
     float profile;
+    layout(offset = 56) float redMul;
+    layout(offset = 60) float greenMul;
+    layout(offset = 64) float blueMul;
+    layout(offset = 68) int   useBalance;
 } pc;
 
 layout(location = 0) in  vec2 fragTexCoord;
@@ -32,5 +36,6 @@ void main() {
     float u = clamp(0.5 * warped + 0.5, 0.0, 1.0);
 
     vec4 c = texture(texSampler, vec2(u, fragTexCoord.y));
+    if (pc.useBalance != 0) c.rgb *= vec3(pc.redMul, pc.greenMul, pc.blueMul);
     outColor = vec4(c.rgb, pc.useTexAlpha != 0 ? c.a : 1.0);
 }

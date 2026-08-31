@@ -8,6 +8,10 @@ layout(push_constant) uniform PC {
     float sharpness;
     float resW;
     float resH;
+    layout(offset = 56) float redMul;
+    layout(offset = 60) float greenMul;
+    layout(offset = 64) float blueMul;
+    layout(offset = 68) int   useBalance;
 } pc;
 
 layout(location = 0) in  vec2 fragTexCoord;
@@ -350,5 +354,6 @@ void main() {
     else if (pc.effectId == 19) rgb = applyPixelClean            (uv, pc.sharpness);
     else if (pc.effectId == 20) rgb = applyAnimeEdge             (uv, pc.sharpness);
     else                        rgb = texture(texSampler, uv).rgb;
+    if (pc.useBalance != 0) rgb *= vec3(pc.redMul, pc.greenMul, pc.blueMul);
     outColor = vec4(rgb, 1.0);
 }

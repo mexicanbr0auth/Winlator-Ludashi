@@ -260,6 +260,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
             pc.effectId = postFXMode;
             pc.resW = 0.0f;
             pc.sharpness = sharpness;
+            pc.redMul = colorRedMul; pc.greenMul = colorGreenMul; pc.blueMul = colorBlueMul;
+            pc.useBalance = colorBalanceEnabled ? 1 : 0;
             pc.cosR = rotCosR;
             pc.sinR = rotSinR;
             vk_.CmdPushConstants(cb, pipeLayout,
@@ -283,6 +285,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
                                        (float)swapchainExt.height);
             pc.effectId = postFXMode;
             pc.sharpness = sharpness;
+            pc.redMul = colorRedMul; pc.greenMul = colorGreenMul; pc.blueMul = colorBlueMul;
+            pc.useBalance = colorBalanceEnabled ? 1 : 0;
             pc.cosR = rotCosR;
             pc.sinR = rotSinR;
             vk_.CmdPushConstants(cb, pipeLayout,
@@ -298,6 +302,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
             pc.sharpness = sharpness;
             pc.resW = (float)std::max(d.w, 1);
             pc.resH = (float)std::max(d.h, 1);
+            pc.redMul = colorRedMul; pc.greenMul = colorGreenMul; pc.blueMul = colorBlueMul;
+            pc.useBalance = colorBalanceEnabled ? 1 : 0;
             pc.cosR = rotCosR;
             pc.sinR = rotSinR;
             vk_.CmdPushConstants(cb, pipeLayout,
@@ -312,6 +318,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
             pc.useTexAlpha = 0;
             pc.strength = stretchStrength;
             pc.profile = stretchProfile;
+            pc.redMul = colorRedMul; pc.greenMul = colorGreenMul; pc.blueMul = colorBlueMul;
+            pc.useBalance = colorBalanceEnabled ? 1 : 0;
             pc.cosR = rotCosR;
             pc.sinR = rotSinR;
             vk_.CmdPushConstants(cb, pipeLayout,
@@ -324,6 +332,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
             pc.ndcX1 = (ox + (float)(d.x + d.w) * sx) / cw * 2.0f - 1.0f;
             pc.ndcY1 = (oy + (float)(d.y + d.h) * sy) / ch * 2.0f - 1.0f;
             pc.useTexAlpha = 0;
+            pc.redMul = colorRedMul; pc.greenMul = colorGreenMul; pc.blueMul = colorBlueMul;
+            pc.useBalance = colorBalanceEnabled ? 1 : 0;
             pc.cosR = rotCosR;
             pc.sinR = rotSinR;
             vk_.CmdPushConstants(cb, pipeLayout,

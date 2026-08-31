@@ -15,6 +15,10 @@ layout(push_constant) uniform PC {
     float outH;
     int   effectId;
     float sharpness;
+    layout(offset = 56) float redMul;
+    layout(offset = 60) float greenMul;
+    layout(offset = 64) float blueMul;
+    layout(offset = 68) int   useBalance;
 } pc;
 
 layout(binding = 0) uniform sampler2D texSampler;
@@ -62,5 +66,6 @@ void main() {
 
     vec4 color = accum / max(abs(totalWeight), 1e-6);
     if (pc.useTexAlpha == 0) color.a = 1.0;
+    if (pc.useBalance != 0) color.rgb *= vec3(pc.redMul, pc.greenMul, pc.blueMul);
     outColor = clamp(color, 0.0, 1.0);
 }

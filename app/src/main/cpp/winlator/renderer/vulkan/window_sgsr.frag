@@ -16,6 +16,10 @@ layout(push_constant) uniform PC {
     int   effectId;
     float resW;
     float sharpness;
+    layout(offset = 56) float redMul;
+    layout(offset = 60) float greenMul;
+    layout(offset = 64) float blueMul;
+    layout(offset = 68) int   useBalance;
 } pc;
 
 layout(binding = 0) uniform mediump sampler2D texSampler;
@@ -118,6 +122,7 @@ void main() {
     if (edgeVote <= EDGE_THRESHOLD) {
         vec3 rgb = center.rgb;
         if (pc.effectId != 0) applyPostFX(rgb, fragTexCoord);
+        if (pc.useBalance != 0) rgb *= vec3(pc.redMul, pc.greenMul, pc.blueMul);
         outColor = vec4(rgb, (pc.useTexAlpha != 0) ? center.a : 1.0);
         return;
     }
@@ -174,6 +179,7 @@ void main() {
     result.a   = (pc.useTexAlpha != 0) ? center.a : 1.0;
 
     if (pc.effectId != 0) applyPostFX(result.rgb, fragTexCoord);
+    if (pc.useBalance != 0) result.rgb *= vec3(pc.redMul, pc.greenMul, pc.blueMul);
 
     outColor = result;
 }

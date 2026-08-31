@@ -128,24 +128,32 @@ struct WindowPushConstantsSGSR  { float ndcX0, ndcY0, ndcX1, ndcY1; int useTexAl
                                   int   effectId;
                                   float resW;
                                   float sharpness;
-                                  float cosR = 1.f, sinR = 0.f; };
+                                  float cosR = 1.f, sinR = 0.f;
+                                  float redMul = 1.f, greenMul = 1.f, blueMul = 1.f;
+                                  int   useBalance = 0; };
 struct WindowPushConstantsStretch { float ndcX0, ndcY0, ndcX1, ndcY1; int useTexAlpha; float strength; float profile;
                                   float _pad[5];
-                                  float cosR = 1.f, sinR = 0.f; };
+                                  float cosR = 1.f, sinR = 0.f;
+                                  float redMul = 1.f, greenMul = 1.f, blueMul = 1.f;
+                                  int   useBalance = 0; };
 
 struct WindowPushConstantsFSR1  { float ndcX0, ndcY0, ndcX1, ndcY1; int useTexAlpha;
                                   float srcW, srcH, outW, outH;
                                   int   effectId;
                                   float sharpness;
                                   float _pad0;
-                                  float cosR = 1.f, sinR = 0.f; };
+                                  float cosR = 1.f, sinR = 0.f;
+                                  float redMul = 1.f, greenMul = 1.f, blueMul = 1.f;
+                                  int   useBalance = 0; };
 
 struct WindowPushConstantsPostFX  { float ndcX0, ndcY0, ndcX1, ndcY1;
                                     int   effectId;
                                     float sharpness;
                                     float resW, resH;
                                     float _pad[4];
-                                    float cosR = 1.f, sinR = 0.f; };
+                                    float cosR = 1.f, sinR = 0.f;
+                                    float redMul = 1.f, greenMul = 1.f, blueMul = 1.f;
+                                    int   useBalance = 0; };
 
 static_assert(offsetof(WindowPushConstants,       cosR) == 48, "cosR offset must match window_vert.txt layout(offset=48)");
 static_assert(offsetof(WindowPushConstantsSGSR,   cosR) == 48, "cosR offset must match window_vert.txt layout(offset=48)");

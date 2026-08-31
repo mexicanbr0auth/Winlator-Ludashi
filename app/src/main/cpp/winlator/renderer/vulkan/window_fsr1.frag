@@ -20,6 +20,10 @@ layout(push_constant) uniform PC {
     float outH;
     int   effectId;
     float sharpness;
+    layout(offset = 56) float redMul;
+    layout(offset = 60) float greenMul;
+    layout(offset = 64) float blueMul;
+    layout(offset = 68) int   useBalance;
 } pc;
 
 layout(binding = 0) uniform mediump sampler2D texSampler;
@@ -62,7 +66,9 @@ void main() {
     // SGSR uses 12/255. FSR deliberately engages reconstruction earlier.
     const float EDGE_THRESHOLD = 8.0 / 255.0;
     if (edgeVote <= EDGE_THRESHOLD) {
-        outColor = vec4(center.rgb, (pc.useTexAlpha != 0) ? center.a : 1.0);
+        vec3 rgb = center.rgb;
+        if (pc.useBalance != 0) rgb *= vec3(pc.redMul, pc.greenMul, pc.blueMul);
+        outColor = vec4(rgb, (pc.useTexAlpha != 0) ? center.a : 1.0);
         return;
     }
 
@@ -116,5 +122,6 @@ void main() {
     float deltaY = clamp(finalY - centerG, -maxDelta, maxDelta);
 
     vec3 result = clamp(center.rgb + vec3(deltaY), 0.0, 1.0);
+    if (pc.useBalance != 0) result *= vec3(pc.redMul, pc.greenMul, pc.blueMul);
     outColor = vec4(result, (pc.useTexAlpha != 0) ? center.a : 1.0);
 }
