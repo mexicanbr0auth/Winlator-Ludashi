@@ -18,6 +18,7 @@ import org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStr
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -361,6 +362,41 @@ public abstract class TarCompressorUtils {
             Log.e("RestoreOp", "Failed to extract tar file", e);
             return false;
         }
+    }
+
+    public static String readTextFile(Type type, Context context, String assetFile, String fileName) {
+        try {
+            return readTextFile(type, context.getAssets().open(assetFile), fileName);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public static String readTextFile(Type type, File source, String fileName) {
+        if (source == null || !source.isFile()) return null;
+        try {
+            return readTextFile(type, new BufferedInputStream(new FileInputStream(source), StreamUtils.BUFFER_SIZE), fileName);
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+    }
+
+    public static String readTextFile(Type type, InputStream source, String fileName) {
+        if (source == null) return null;
+        try (InputStream inStream = getCompressorInputStream(type, source);
+             TarArchiveInputStream tar = new TarArchiveInputStream(inStream)) {
+            TarArchiveEntry entry;
+            while ((entry = (TarArchiveEntry) tar.getNextEntry()) != null) {
+                if (entry.getName().equals(fileName)) {
+                    ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+                    StreamUtils.copy(tar, outStream);
+                    return outStream.toString();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

@@ -681,4 +681,21 @@ E.g. <b>META</b> for <i>META key</i>, \n
     <string name="game_folder">Game Folder</string>
 
     <string name="magnifier_not_available">Magnifier is not available in DisplayX mode</string>
+
+    <string name="manage_graphics_drivers">Manage Graphics Drivers</string>
+    <string name="manage_graphics_drivers_description">Manage and update internal graphics driver components. Updated files are stored in internal storage and prioritized over bundled versions.</string>
+    <string name="reset_all">Reset All</string>
+    <string name="reset_all_drivers_confirm">Do you want to reset all drivers to their bundled versions?</string>
+    <string name="driver_reset_success">Driver reset to default.</string>
+    <string name="updated">Updated</string>
+    <string name="bundled">Bundled</string>
+    <string name="no_notes_available">No notes available.</string>
+    <string name="driver_details">Driver Details</string>
+    <string name="update_driver_initial_confirm">Do you want to update %1$s?\n\nMake sure the file exactly matches the name and is a valid .tzst archive.</string>
+    <string name="reset_driver_confirm">Do you want to reset this driver to the default bundled version?</string>
+    <string name="update_driver_confirm">Are you sure you want to replace %1$s with the selected file?\n\nThis will override the current version.</string>
+    <string name="driver_file_mismatch">Selected file (%1$s) must exactly match %2$s</string>
+    <string name="unable_to_determine_filename">Could not determine file name. Please try again.</string>
+    <string name="driver_updated_success">Driver updated successfully!</string>
+    <string name="driver_update_failed">Failed to update driver.</string>
 </resources>

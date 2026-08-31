@@ -110,6 +110,8 @@ class EGLRenderer {
         float magnifierZoom = 1.0f;
         bool cursorVisible = true;
         int filterMode = 0;
+        bool colorBalanceEnabled = false;
+        float colorRedMul = 1.0f, colorGreenMul = 1.0f, colorBlueMul = 1.0f;
         WindowManager *windowManager;
         CursorManager *cursorManager;
         JNICache *cache;
@@ -130,4 +132,5 @@ class EGLRenderer {
         void destroySurface();
         void createSurface(ANativeWindow *window);
         void changeSurface(int width, int height);
+        void setColorBalance(bool enabled, float r, float g, float b);
 };

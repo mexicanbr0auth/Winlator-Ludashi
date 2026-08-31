@@ -317,6 +317,14 @@ Java_com_winlator_cmod_widget_VulkanXServerView_nativeSetSwapRB(
 }
 
 extern "C" JNIEXPORT void JNICALL
+Java_com_winlator_cmod_widget_VulkanXServerView_nativeSetColorBalance(
+    JNIEnv*, jobject, jlong handle, jboolean enabled, jfloat r, jfloat g, jfloat b)
+{
+    auto* r = reinterpret_cast<VulkanRendererContext*>(handle);
+    if (r) r->setColorBalance(enabled == JNI_TRUE, (float)r, (float)g, (float)b);
+}
+
+extern "C" JNIEXPORT void JNICALL
 Java_com_winlator_cmod_widget_VulkanXServerView_nativeSetPresentMode(
     JNIEnv*, jobject, jlong handle, jint mode)
 {

@@ -185,6 +185,13 @@ public class Container {
         putExtra("displayXPresentAtRefreshRate", v ? "1" : "0");
     }
 
+    public boolean getFixBlueTint() {
+        return "1".equals(getExtra("fixBlueTint", "0"));
+    }
+    public void setFixBlueTint(boolean v) {
+        putExtra("fixBlueTint", v ? "1" : "0");
+    }
+
     public String getDXWrapper() {
         return dxwrapper;
     }
@@ -641,7 +648,7 @@ public class Container {
             }
             if (data.has("graphicsDriver")) {
                 String graphicsDriver = data.getString("graphicsDriver");
-                if (graphicsDriver.equals("wrapper") || graphicsDriver.equals("turnip-zink") || graphicsDriver.equals("turnip") || graphicsDriver.equals("llvmpipe")) {
+                if (graphicsDriver.equals("turnip-zink") || graphicsDriver.equals("turnip") || graphicsDriver.equals("llvmpipe")) {
                     data.put("graphicsDriver", DEFAULT_GRAPHICS_DRIVER);
                 }
             }

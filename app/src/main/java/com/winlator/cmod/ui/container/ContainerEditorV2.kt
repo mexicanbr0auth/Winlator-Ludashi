@@ -193,6 +193,7 @@ private class ContainerEditorStateV2(
     var bcn by mutableStateOf(readConfig(graphicsConfig, "bcnEmulation", ';').ifBlank { "auto" })
     var bcnType by mutableStateOf(readConfig(graphicsConfig, "bcnEmulationType", ';').ifBlank { "compute" })
     var bcnCache by mutableStateOf(readConfig(graphicsConfig, "bcnEmulationCache", ';') == "1")
+    var fixBlueTint by mutableStateOf((editing?.getExtra("fixBlueTint", "0") ?: "0") == "1")
 
     var wrapper by mutableStateOf(editing?.dxWrapper ?: Container.DEFAULT_DXWRAPPER)
     var wrapperConfig by mutableStateOf(editing?.dxWrapperConfig ?: Container.DEFAULT_DXWRAPPERCONFIG)
@@ -302,7 +303,7 @@ private class ContainerEditorStateV2(
         name, screen, audio, oboeProfile, oboeApi, oboeAdaptive, oboeExclusive, hudMode, locale, soundFont,
         fullscreen, desktopTheme, desktopBackground, wallpaperStamp, mouseWarp,
         renderer, rendererPresentMode, rendererDriver, filterMode, surfaceFormat, trueDisplayX,
-        displayXPerformanceMode, displayXPresentAtRefreshRate, graphicsDriver, graphicsConfig,
+        displayXPerformanceMode, displayXPresentAtRefreshRate, graphicsDriver, graphicsConfig, fixBlueTint,
         wrapper, wrapperConfig, emulator, fexVersion, boxVersion, fexPreset, boxPreset, exclusive, xinput, dinput,
         syncCpu, startup, openGlDefaultInitialized, autoMesaGlVersionOverride, envVars,
         cpu64.joinToString(), cpu32.joinToString(), components.entries.sortedBy { it.key }.joinToString()
@@ -473,6 +474,7 @@ internal fun ContainerEditorV2(editId: Int?, onBack: () -> Unit, onCreated: () -
         container.putExtra("mouseWarpOverride", state.mouseWarp)
         container.putExtra("openGlDefaultInitialized", if (state.openGlDefaultInitialized) "1" else "0")
         container.putExtra("autoMesaGlVersionOverride", if (state.autoMesaGlVersionOverride) "1" else "0")
+        container.putExtra("fixBlueTint", if (state.fixBlueTint) "1" else "0")
         container.saveData()
         applyMouseWarp(container)
     }
@@ -539,7 +541,8 @@ internal fun ContainerEditorV2(editId: Int?, onBack: () -> Unit, onCreated: () -
                     .put("oboeAdaptive", if (state.oboeAdaptive) "1" else "0")
                     .put("oboeExclusive", if (state.oboeExclusive) "1" else "0")
                     .put("openGlDefaultInitialized", if (state.openGlDefaultInitialized) "1" else "0")
-                    .put("autoMesaGlVersionOverride", if (state.autoMesaGlVersionOverride) "1" else "0"))
+                    .put("autoMesaGlVersionOverride", if (state.autoMesaGlVersionOverride) "1" else "0")
+                    .put("fixBlueTint", if (state.fixBlueTint) "1" else "0"))
             }
             manager.createContainerAsync(data, contents) { created ->
                 creating = false
@@ -916,6 +919,8 @@ private fun ContainerCategoryV2(
                 SettingToggle("BCN Emulation Cache", s.bcnCache) {
                     s.bcnCache = it; s.graphics("bcnEmulationCache", if (it) "1" else "0")
                 }
+                SettingsDivider()
+                SettingToggle("Fix Blue Tint", s.fixBlueTint) { s.fixBlueTint = it }
             }
         }
 

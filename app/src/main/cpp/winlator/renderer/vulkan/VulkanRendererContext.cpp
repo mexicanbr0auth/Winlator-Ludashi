@@ -980,6 +980,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
             pc.ndcX0=(ox+(float)d.x*sx)/cw*2.f-1.f; pc.ndcY0=(oy+(float)d.y*sy)/ch*2.f-1.f;
             pc.ndcX1=(ox+(float)(d.x+d.w)*sx)/cw*2.f-1.f; pc.ndcY1=(oy+(float)(d.y+d.h)*sy)/ch*2.f-1.f;
             pc.useTexAlpha=0;
+            pc.redMul=colorRedMul; pc.greenMul=colorGreenMul; pc.blueMul=colorBlueMul;
+            pc.useBalance=colorBalanceEnabled?1:0;
             pc.cosR = rotCosR; pc.sinR = rotSinR;
             vk_.CmdPushConstants(cb, pipeLayout, VK_SHADER_STAGE_VERTEX_BIT|VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(pc), &pc);
         }
@@ -1549,6 +1551,15 @@ void VulkanRendererContext::setSwapRB(bool enabled) {
     if (swapRB == enabled) return;
     swapRB = enabled;
     RLOG("setSwapRB: %d", (int)swapRB);
+}
+
+void VulkanRendererContext::setColorBalance(bool enabled, float r, float g, float b) {
+    colorBalanceEnabled = enabled;
+    colorRedMul = r; colorGreenMul = g; colorBlueMul = b;
+    RLOG("setColorBalance: enabled=%d r=%.3f g=%.3f b=%.3f", (int)enabled, r, g, b);
+    if (filterMode == 0 || filterMode == 1) {
+        needsRender.store(true); dirtyCV.notify_one();
+    }
 }
 
 void VulkanRendererContext::setPresentMode(VkPresentModeKHR mode) {

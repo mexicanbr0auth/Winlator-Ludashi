@@ -427,6 +427,8 @@ void EGLRenderer::renderDrawable(int textureId, int length, float xform[], bool 
     glUniform1i(drawableShader->getUniformLoc("texture"), 0);
     glUniform1fv(drawableShader->getUniformLoc("xform"), length, xform);
     glUniform1i(drawableShader->getUniformLoc("is_cursor"), isFromWindow ? 0 : 1);
+    glUniform1i(drawableShader->getUniformLoc("color_balance_enabled"), colorBalanceEnabled ? 1 : 0);
+    glUniform3f(drawableShader->getUniformLoc("color_balance"), colorRedMul, colorGreenMul, colorBlueMul);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
@@ -549,4 +551,10 @@ void EGLRenderer::resume() {
     state = State::RESUME;
     renderLock.notify();
     renderLock.wait(lock, [&]{ return stopped.load() || state == State::NONE; });
+}
+
+void EGLRenderer::setColorBalance(bool enabled, float r, float g, float b) {
+    colorBalanceEnabled = enabled;
+    colorRedMul = r; colorGreenMul = g; colorBlueMul = b;
+    requestRenderer();
 }

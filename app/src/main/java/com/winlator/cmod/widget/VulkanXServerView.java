@@ -130,6 +130,7 @@ public class VulkanXServerView extends XServerRendererView implements SurfaceHol
     private native void nativeSetStretchMode(long handle, int mode);
     private native void nativeSetPostFXMode(long handle, int mode);
     private native void nativeSetSwapRB(long handle, boolean enabled);
+    private native void nativeSetColorBalance(long handle, boolean enabled, float r, float g, float b);
     private native void nativeSetPresentMode(long handle, int mode);
     private native int[] nativeGetSupportedPresentModes(long handle);
 
@@ -570,6 +571,10 @@ public class VulkanXServerView extends XServerRendererView implements SurfaceHol
     public void setSwapRB(boolean enabled) {
         pendingSwapRB = enabled;
         synchronized (lock) { if (nativeHandle != 0) nativeSetSwapRB(nativeHandle, enabled); }
+    }
+
+    public void setColorBalance(boolean enabled, float r, float g, float b) {
+        synchronized (lock) { if (nativeHandle != 0) nativeSetColorBalance(nativeHandle, enabled, r, g, b); }
     }
 
     public void setVkPresentMode(int mode) {

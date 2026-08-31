@@ -394,6 +394,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.main_menu_file_manager:
                 show(new FileManagerFragment(), false);
                 break;
+            case R.id.main_menu_manage_graphics_drivers:
+                show(new ManageGraphicsDriversFragment(), false);
+                break;
             case R.id.main_menu_settings:
                 show(new SettingsFragment(), false);
                 break;

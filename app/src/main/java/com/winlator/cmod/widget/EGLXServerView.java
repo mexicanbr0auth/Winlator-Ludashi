@@ -138,6 +138,11 @@ public class EGLXServerView extends XServerRendererView implements SurfaceHolder
     }
 
     @Override
+    public void setColorBalance(boolean enabled, float r, float g, float b) {
+        nativeSetColorBalance(enabled, r, g, b);
+    }
+
+    @Override
     public void setUnviewableWMClasses(String... classes) {
         this.unviewableWMClasses = classes;
     }
@@ -274,6 +279,8 @@ public class EGLXServerView extends XServerRendererView implements SurfaceHolder
     public native void nativeSetScreenOffsetYRelativeToCursor(boolean cond);
     @FastNative
     public native void nativeSetMagnifierZoom(float magnifierZoom);
+    @FastNative
+    public native void nativeSetColorBalance(boolean enabled, float r, float g, float b);
     @FastNative
     public native void nativeUpdatePointWindow(int id);
     @FastNative

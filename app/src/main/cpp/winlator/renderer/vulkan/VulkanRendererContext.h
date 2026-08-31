@@ -119,7 +119,9 @@ struct VkTable {
 static constexpr uint32_t MAX_FRAMES_IN_FLIGHT = 2;
 
 struct WindowPushConstants      { float ndcX0, ndcY0, ndcX1, ndcY1; int useTexAlpha;
-                                  float _pad[7];
+                                  float redMul = 1.f, greenMul = 1.f, blueMul = 1.f;
+                                  int   useBalance = 0;
+                                  float _pad[3];
                                   float cosR = 1.f, sinR = 0.f; };
 struct WindowPushConstantsSGSR  { float ndcX0, ndcY0, ndcX1, ndcY1; int useTexAlpha;
                                   float invSrcW, invSrcH, srcW, srcH;
@@ -194,6 +196,7 @@ public:
     void setPostFXMode(int mode);
     void setSharpness(float s);
     void setSwapRB(bool enabled);
+    void setColorBalance(bool enabled, float r, float g, float b);
     void setPresentMode(VkPresentModeKHR mode);
     std::vector<int> getSupportedPresentModes() const;
     VkExtent2D getSwapchainExtent() const { return swapchainExt; }
@@ -280,6 +283,8 @@ public:
     float stretchProfile  = 0.60f;
     float sharpness = 0.5f;
     bool swapRB = false;
+    bool colorBalanceEnabled = false;
+    float colorRedMul = 1.0f, colorGreenMul = 1.0f, colorBlueMul = 1.0f;
     float maxAnisotropy           = 1.0f;
     VkPhysicalDeviceMemoryProperties memProperties{};
     VkPresentModeKHR requestedPresentMode = VK_PRESENT_MODE_FIFO_KHR;

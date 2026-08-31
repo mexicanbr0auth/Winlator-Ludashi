@@ -375,6 +375,11 @@ Java_com_winlator_cmod_widget_EGLXServerView_nativeSetMagnifierZoom(JNIEnv *env,
 }
 
 extern "C" JNIEXPORT void JNICALL
+Java_com_winlator_cmod_widget_EGLXServerView_nativeSetColorBalance(JNIEnv *env, jobject thiz, jboolean enabled, jfloat r, jfloat g, jfloat b) {
+    renderer.setColorBalance(enabled == JNI_TRUE, (float)r, (float)g, (float)b);
+}
+
+extern "C" JNIEXPORT void JNICALL
 Java_com_winlator_cmod_widget_EGLXServerView_nativeCreateSurface(JNIEnv *env, jobject thiz, jobject surface) {
     ANativeWindow *window = ANativeWindow_fromSurface(env, surface);
     renderer.createSurface(window);

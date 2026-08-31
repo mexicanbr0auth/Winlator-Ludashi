@@ -28,6 +28,8 @@ public abstract class XServerRendererView extends SurfaceView {
 
     public abstract void setCursorVisible(boolean visible);
     public abstract void setScreenOffsetYRelativeToCursor(boolean relative);
+    public void setColorBalance(boolean enabled, float r, float g, float b) {
+    }
     public abstract void setMagnifierZoom(float zoom);
     public abstract float getMagnifierZoom();
     public abstract void setUnviewableWMClasses(String... classes);

@@ -61,4 +61,6 @@ DrawableShader::DrawableShader() : Shader(drawable_vert, drawable_frag) {
     uniformLocations["xform"] = glGetUniformLocation(programId, "xform");
     uniformLocations["is_cursor"] = glGetUniformLocation(programId, "is_cursor");
     uniformLocations["is_rgba"] = glGetUniformLocation(programId, "is_rgba");
+    uniformLocations["color_balance_enabled"] = glGetUniformLocation(programId, "color_balance_enabled");
+    uniformLocations["color_balance"] = glGetUniformLocation(programId, "color_balance");
 }

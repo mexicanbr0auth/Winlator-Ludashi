@@ -1218,6 +1218,14 @@ public class XServerDisplayActivity extends AppCompatActivity {
                     : (container != null ? container.getRendererFilterMode() : 0));
         }
 
+        String fixBlueTintVal = shortcut != null
+                ? shortcut.getExtra("fixBlueTint", container != null ? container.getExtra("fixBlueTint", "0") : "0")
+                : (container != null ? container.getExtra("fixBlueTint", "0") : "0");
+        if ("1".equals(fixBlueTintVal)) {
+            Log.d("XServerDisplayActivity", "Applying Fix Blue Tint color balance");
+            renderer.setColorBalance(true, 1.0f, 0.98f, 0.88f);
+        }
+
         if (shortcut != null) {
             renderer.setUnviewableWMClasses("explorer.exe");
         }
@@ -2391,12 +2399,23 @@ public class XServerDisplayActivity extends AppCompatActivity {
 
         envVars.put("VK_ICD_FILENAMES", imageFs.getShareDir() + "/vulkan/icd.d/wrapper_icd.aarch64.json");
 
+        String wrapperAsset = "graphics_driver/wrapper.tzst";
+        String gdriver = graphicsDriver == null ? "" : graphicsDriver.toLowerCase();
+        if (gdriver.startsWith("wrapper-leegao")) wrapperAsset = "graphics_driver/wrapper-leegao.tzst";
+        else if (gdriver.startsWith("wrapper-v2")) wrapperAsset = "graphics_driver/wrapper-v2.tzst";
+        else if (gdriver.startsWith("wrapper-gamenative")) wrapperAsset = "graphics_driver/wrapper-gamenative.tzst";
+
         File graphicsRuntimeMarker = new File(rootDir,
                 "usr/lib/.winlator-graphics-runtime-c7474f7e-25b50a11-v2");
+        File wrapperMarker = new File(rootDir,
+                "usr/lib/.winlator-wrapper-x-2f-" + wrapperAsset.hashCode());
+        if (firstTimeBoot || !wrapperMarker.isFile()) {
+            Log.d("XServerDisplayActivity", "Installing graphics wrapper: " + wrapperAsset);
+            TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, wrapperAsset, rootDir);
+            FileUtils.writeString(wrapperMarker, wrapperAsset);
+        }
         if (firstTimeBoot || !graphicsRuntimeMarker.isFile()) {
-            Log.d("XServerDisplayActivity", "Installing paired Pipetto wrapper and common graphics runtime");
-            TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "graphics_driver/wrapper" + ".tzst",
-                    rootDir);
+            Log.d("XServerDisplayActivity", "Installing common graphics runtime");
             TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "layers" + ".tzst", rootDir);
             TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, this, "graphics_driver/extra_libs" + ".tzst",
                     rootDir);
