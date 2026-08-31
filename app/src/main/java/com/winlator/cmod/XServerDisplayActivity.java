@@ -1222,8 +1222,14 @@ public class XServerDisplayActivity extends AppCompatActivity {
                 ? shortcut.getExtra("fixBlueTint", container != null ? container.getExtra("fixBlueTint", "0") : "0")
                 : (container != null ? container.getExtra("fixBlueTint", "0") : "0");
         if ("1".equals(fixBlueTintVal)) {
-            Log.d("XServerDisplayActivity", "Applying Fix Blue Tint color balance");
-            renderer.setColorBalance(true, 1.0f, 0.98f, 0.88f);
+            boolean defaultWrapper = graphicsDriver == null
+                    || graphicsDriver.equalsIgnoreCase("wrapper")
+                    || graphicsDriver.equalsIgnoreCase("zink");
+            float red   = 1.0f;
+            float green = 0.98f;
+            float blue  = defaultWrapper ? 0.88f : 0.80f;
+            Log.d("XServerDisplayActivity", String.format("Applying Fix Blue Tint color balance (gdriver=%s, blueMul=%.2f)", graphicsDriver, blue));
+            renderer.setColorBalance(true, red, green, blue);
         }
 
         if (shortcut != null) {
