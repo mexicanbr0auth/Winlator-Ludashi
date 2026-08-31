@@ -392,10 +392,8 @@ private fun settingFieldLabel(label: String): String = when (label) {
     else -> label
 }
 
-private fun settingChoiceEntries(label: String, entries: List<String>): List<String> =
-    if (label == "Graphics Driver") listOf("Zink", "Freedreno") else entries
-private fun settingChoiceSelected(label: String, selected: String): String =
-    if (label == "Graphics Driver" && selected.equals("wrapper", ignoreCase = true)) "Zink" else selected
+private fun settingChoiceEntries(label: String, entries: List<String>): List<String> = entries
+private fun settingChoiceSelected(label: String, selected: String): String = selected
 
 @Composable
 internal fun SettingsCard(content: @Composable () -> Unit) {
