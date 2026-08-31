@@ -64,6 +64,10 @@ public class VulkanXServerView extends XServerRendererView implements SurfaceHol
     private int     pendingPostFXMode     = 0;
     private float   pendingSharpness      = 0.5f;
     private boolean pendingSwapRB         = false;
+    private boolean pendingColorBalanceEnabled = false;
+    private float   pendingColorRedMul    = 1.0f;
+    private float   pendingColorGreenMul  = 1.0f;
+    private float   pendingColorBlueMul   = 1.0f;
 
     private WinlatorHUD hudRef = null;
     private FrameRating classicHudRef = null;
@@ -191,6 +195,8 @@ public class VulkanXServerView extends XServerRendererView implements SurfaceHol
                         nativeSetStretchMode(nativeHandle, pendingStretchMode);
                         nativeSetPostFXMode(nativeHandle, pendingPostFXMode);
                         nativeSetSharpness(nativeHandle, pendingSharpness);
+                        nativeSetColorBalance(nativeHandle, pendingColorBalanceEnabled,
+                            pendingColorRedMul, pendingColorGreenMul, pendingColorBlueMul);
                         updateTransform();
                         nativeSetCursorVisible(nativeHandle, cursorVisible);
                         initComplete = true;
@@ -209,6 +215,8 @@ public class VulkanXServerView extends XServerRendererView implements SurfaceHol
                     nativeSetSwapRB(nativeHandle, pendingSwapRB);
                     nativeSetPostFXMode(nativeHandle, pendingPostFXMode);
                     nativeSetSharpness(nativeHandle, pendingSharpness);
+                    nativeSetColorBalance(nativeHandle, pendingColorBalanceEnabled,
+                        pendingColorRedMul, pendingColorGreenMul, pendingColorBlueMul);
                     updateTransform();
                     nativeSetCursorVisible(nativeHandle, cursorVisible);
 
@@ -574,6 +582,10 @@ public class VulkanXServerView extends XServerRendererView implements SurfaceHol
     }
 
     public void setColorBalance(boolean enabled, float r, float g, float b) {
+        pendingColorBalanceEnabled = enabled;
+        pendingColorRedMul = r;
+        pendingColorGreenMul = g;
+        pendingColorBlueMul = b;
         synchronized (lock) { if (nativeHandle != 0) nativeSetColorBalance(nativeHandle, enabled, r, g, b); }
     }
 
