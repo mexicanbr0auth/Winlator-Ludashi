@@ -54,3 +54,18 @@ jobs:
           name: Bionic-Build-${{ github.run_number }}
           path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
+
+      - name: Upload APK to GoFile
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK="$(find app/build/outputs/apk/release -maxdepth 1 -type f -name '*.apk' | head -n1)"
+          test -n "$APK"
+          SERVER_JSON="$(curl -fsSL https://api.gofile.io/servers)"
+          SERVER="$(python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["data"]["servers"][0]["name"])' <<<"$SERVER_JSON")"
+          RESPONSE="$(curl -fsSL -F "file=@$APK" "https://$SERVER.gofile.io/contents/uploadfile")"
+          LINK="$(python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("status")=="ok", d; print(d["data"]["downloadPage"])' <<<"$RESPONSE")"
+          echo "GOFILE_URL=$LINK" >> "$GITHUB_ENV"
+          echo "### APK Winlator Frosted Glass" >> "$GITHUB_STEP_SUMMARY"
+          echo "$LINK" >> "$GITHUB_STEP_SUMMARY"
+          echo "GoFile: $LINK"
