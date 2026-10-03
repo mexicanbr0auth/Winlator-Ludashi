@@ -144,7 +144,7 @@ internal fun LibraryRoot(
         return
     }
 
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(horizontal = 14.dp)) {
+    Column(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFFF4F7FA), Color(0xFFE2EAF0)))).padding(horizontal = 14.dp)) {
         if (landscape) {
             LibraryLandscapeHeader(
                 activity = activity,
@@ -295,7 +295,7 @@ private fun LibraryFilterChip(label: String, selected: Boolean, click: () -> Uni
     Surface(
         onClick = click,
         shape = RoundedCornerShape(10.dp),
-        color = if (selected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent,
+        color = if (selected) Color.White.copy(.72f) else Color.White.copy(.38f),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) { Text(label, Modifier.padding(horizontal = 15.dp, vertical = 8.dp), style = MaterialTheme.typography.labelLarge) }
 }
@@ -309,7 +309,7 @@ internal fun CompactArtworkCard(item: LibraryItem, cb: LibraryCallbacks) {
             onClick = { cb.onOpen(item.shortcutPath) },
             onLongClick = { cb.onAction(item.shortcutPath, LibraryComposeHost.ACTION_SETTINGS) }
         ),
-        shape = RoundedCornerShape(15.dp),
+        shape = RoundedCornerShape(20.dp),
         color = MaterialTheme.colorScheme.surface,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {
@@ -357,7 +357,7 @@ internal fun CoverArtworkCard(item: LibraryItem, cb: LibraryCallbacks) {
             onClick = { cb.onOpen(item.shortcutPath) },
             onLongClick = { cb.onAction(item.shortcutPath, LibraryComposeHost.ACTION_SETTINGS) }
         ),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(22.dp),
         color = MaterialTheme.colorScheme.surface,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {

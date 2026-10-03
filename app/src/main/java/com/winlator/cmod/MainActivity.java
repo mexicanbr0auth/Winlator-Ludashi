@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
 
-        setNavigationViewItemTextColor(navigationView, Color.WHITE);
+        setNavigationViewItemTextColor(navigationView, Color.rgb(0x27, 0x31, 0x3B));
 
         File winlatorDir = new File(SettingsFragment.DEFAULT_WINLATOR_PATH);
         if (!winlatorDir.exists())

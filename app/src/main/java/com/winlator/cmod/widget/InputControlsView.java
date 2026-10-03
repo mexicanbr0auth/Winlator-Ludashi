@@ -251,11 +251,11 @@ public class InputControlsView extends View {
     private void drawGrid(Canvas canvas) {
         paint.setStyle(Paint.Style.FILL);
         paint.setStrokeWidth(snappingSize * 0.0625f);
-        paint.setColor(0xff000000);
-        canvas.drawColor(Color.BLACK);
+        paint.setColor(0x55ffffff);
+        canvas.drawColor(0xffe8eef3);
 
         paint.setAntiAlias(false);
-        paint.setColor(0xff303030);
+        paint.setColor(0x22455260);
 
         int width = getMaxWidth();
         int height = getMaxHeight();
@@ -267,7 +267,7 @@ public class InputControlsView extends View {
 
         float cx = Mathf.roundTo(width * 0.5f, snappingSize);
         float cy = Mathf.roundTo(height * 0.5f, snappingSize);
-        paint.setColor(0xff424242);
+        paint.setColor(0x44455260);
 
         for (int i = 0; i < width; i += snappingSize * 2) {
             canvas.drawLine(cx, i, cx, i + snappingSize, paint);
@@ -280,7 +280,7 @@ public class InputControlsView extends View {
     private void drawCursor(Canvas canvas) {
         paint.setStyle(Paint.Style.FILL);
         paint.setStrokeWidth(snappingSize * 0.0625f);
-        paint.setColor(0xffc62828);
+        paint.setColor(0xff4f8fbe);
 
         paint.setAntiAlias(false);
         canvas.drawLine(0, cursor.y, getMaxWidth(), cursor.y, paint);

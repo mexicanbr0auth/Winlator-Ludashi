@@ -63,18 +63,18 @@ public class WinlatorHUD extends View {
             | SHOW_POWER | SHOW_RENDERER | SHOW_RAM | SHOW_GPU_NAME | SHOW_CPU_TEMP
             | SHOW_BATTERY_TEMP | SHOW_CHARGE_STATE;
 
-    private static final int C_BG = Color.argb(180, 0, 0, 0);
-    private static final int C_WHITE = Color.WHITE;
-    private static final int C_GPU_NAME = Color.rgb(0xA9, 0xD6, 0xFF);
-    private static final int C_GPU_USAGE = Color.rgb(0xE0, 0x40, 0xFB);
-    private static final int C_CPU = Color.rgb(0x00, 0xE5, 0xFF);
-    private static final int C_BATT = Color.rgb(0xFF, 0x80, 0x00);
-    private static final int C_CHG = Color.rgb(0x40, 0xC4, 0x40);
-    private static final int C_TEMP = Color.rgb(0xEF, 0x53, 0x50);
-    private static final int C_FPS = Color.rgb(0x76, 0xFF, 0x03);
-    private static final int C_REND = Color.rgb(0xFF, 0xEA, 0x00);
-    private static final int C_RAM = Color.rgb(0xB0, 0xFF, 0xB0);
-    private static final int C_SEP = Color.rgb(0x60, 0x60, 0x60);
+    private static final int C_BG = Color.argb(178, 248, 250, 252);
+    private static final int C_WHITE = Color.rgb(0x25, 0x2D, 0x35);
+    private static final int C_GPU_NAME = Color.rgb(0x3F, 0x68, 0x82);
+    private static final int C_GPU_USAGE = Color.rgb(0x55, 0x79, 0x91);
+    private static final int C_CPU = Color.rgb(0x3F, 0x78, 0x98);
+    private static final int C_BATT = Color.rgb(0xA5, 0x78, 0x2B);
+    private static final int C_CHG = Color.rgb(0x3E, 0x8B, 0x5B);
+    private static final int C_TEMP = Color.rgb(0xB5, 0x5A, 0x55);
+    private static final int C_FPS = Color.rgb(0x2F, 0x77, 0x54);
+    private static final int C_REND = Color.rgb(0x4D, 0x6E, 0x82);
+    private static final int C_RAM = Color.rgb(0x4F, 0x75, 0x64);
+    private static final int C_SEP = Color.rgb(0x9A, 0xA4, 0xAC);
 
     private static final int TEXT_FLAGS = Paint.ANTI_ALIAS_FLAG
             | Paint.SUBPIXEL_TEXT_FLAG | Paint.LINEAR_TEXT_FLAG;
@@ -729,7 +729,7 @@ public class WinlatorHUD extends View {
         if (getVisibility() != VISIBLE) return;
 
         try {
-            int targetAlpha = (int) (180 * hudAlpha);
+            int targetAlpha = (int) (178 * hudAlpha);
             if (targetAlpha != lastBgAlpha) {
                 pBg.setAlpha(targetAlpha);
                 lastBgAlpha = targetAlpha;

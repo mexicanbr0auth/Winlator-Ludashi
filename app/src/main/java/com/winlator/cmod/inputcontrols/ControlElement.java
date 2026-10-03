@@ -463,9 +463,10 @@ public class ControlElement {
         return (color & 0x00ffffff) | ((scaledAlpha & 0xff) << 24);
     }
 
-    private static final int WINLATOR_BLUE = 0xff2184ff;
-    private static final int DARK_SURFACE = 0xff06111d;
-    private static final int EDGE_SOFT = 0xff7fa8d8;
+    private static final int WINLATOR_BLUE = 0xff5f9fc7;
+    // Frosted white glass: translucent milky fill + bright rim.
+    private static final int DARK_SURFACE = 0xfff4f7f9;
+    private static final int EDGE_SOFT = 0xffffffff;
 
     
     
@@ -473,7 +474,7 @@ public class ControlElement {
         if (customColor != 0) return customColor;
         ControlsProfile profile = inputControlsView.getProfile();
         int schemeColor = profile != null ? profile.getThemeColor() : 0;
-        return schemeColor != 0 ? schemeColor : 0xffffffff;
+        return schemeColor != 0 ? schemeColor : 0xff27313b;
     }
 
     private boolean isVisuallyPressed() {
@@ -522,7 +523,7 @@ public class ControlElement {
         setupPaint(paint, Paint.Style.STROKE, withAlpha(EDGE_SOFT, active ? 70 : 28), Math.max(1f, inputControlsView.getSnappingSize() * 0.22f * scale));
         canvas.drawRoundRect(left, top, right, bottom, radius, radius, paint);
 
-        setupPaint(paint, Paint.Style.FILL, active ? withAlpha(getThemeColor(), 190) : withAlpha(DARK_SURFACE, 135), 0);
+        setupPaint(paint, Paint.Style.FILL, active ? withAlpha(getThemeColor(), 190) : withAlpha(DARK_SURFACE, 112), 0);
         canvas.drawRoundRect(left, top, right, bottom, radius, radius, paint);
 
         
@@ -540,7 +541,7 @@ public class ControlElement {
         setupPaint(paint, Paint.Style.STROKE, withAlpha(EDGE_SOFT, active ? 74 : 30), Math.max(1f, inputControlsView.getSnappingSize() * 0.20f * scale));
         canvas.drawCircle(cx, cy, radius, paint);
 
-        setupPaint(paint, Paint.Style.FILL, active && fillActive ? withAlpha(accentColor, 190) : withAlpha(DARK_SURFACE, 140), 0);
+        setupPaint(paint, Paint.Style.FILL, active && fillActive ? withAlpha(accentColor, 190) : withAlpha(DARK_SURFACE, 118), 0);
         canvas.drawCircle(cx, cy, radius, paint);
 
         setupPaint(paint, Paint.Style.STROKE, withAlpha(0xffffffff, active ? 44 : 18), Math.max(1f, inputControlsView.getSnappingSize() * 0.08f * scale));
@@ -737,7 +738,7 @@ public class ControlElement {
                 float thumbRadius = outer * 0.42f;
 
                 
-                setupPaint(paint, Paint.Style.FILL, withAlpha(DARK_SURFACE, active ? 155 : 118), 0);
+                setupPaint(paint, Paint.Style.FILL, withAlpha(DARK_SURFACE, active ? 172 : 120), 0);
                 canvas.drawCircle(cx, cy, outer, paint);
 
                 
@@ -753,7 +754,7 @@ public class ControlElement {
                 float thumbstickX = getCurrentPosition().x;
                 float thumbstickY = getCurrentPosition().y;
 
-                setupPaint(paint, Paint.Style.FILL, withAlpha(DARK_SURFACE, 190), 0);
+                setupPaint(paint, Paint.Style.FILL, withAlpha(0xffffffff, 155), 0);
                 canvas.drawCircle(thumbstickX, thumbstickY, thumbRadius, paint);
 
                 setupPaint(paint, Paint.Style.STROKE, withAlpha(EDGE_SOFT, 45), Math.max(1f, snappingSize * 0.12f * scale));
