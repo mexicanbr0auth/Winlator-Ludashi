@@ -388,6 +388,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.main_menu_containers:
                 show(new ContainersFragment(), false);
                 break;
+            case R.id.main_menu_psp:
+                show(new com.winlator.cmod.psp.PspLibraryFragment(), false);
+                break;
             case R.id.main_menu_input_controls:
                 show(InputControlsFragment.newInstance(selectedProfileId), false);
                 break;
